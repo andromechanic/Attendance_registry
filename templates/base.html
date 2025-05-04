@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}WeGuide Institute{% endblock %}</title>
+  <title>{% block title %}Institute{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <style>
     /* Navbar Styles */
@@ -107,7 +107,7 @@
   <!-- Navbar -->
   <nav class="navbar">
     <a href="{{ url_for('login') }}" class="logo">
-      <img src="{{ url_for('static', filename='logo.png') }}" alt="WeGuide Logo">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
       <span class="brand-name"></span>
     </a>
     {% if current_user.is_authenticated %}
