@@ -48,8 +48,9 @@ This is a full-fledged attendance tracking web application built using **Flask (
 📤 CSV Format Guidelines
 For adding students:
 
-Name,Email,Phone
-John Doe,john@example.com,1234567890
+Name,Email,Phone  
+
+Akhil,akhil@example.com,1234567890
 ...
 
 📧 Contact
