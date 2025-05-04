@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}Edit Student — WeGuide{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background: url('/static/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 2rem;
+    margin: 2rem auto;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    color: #fff;
+  }
+
+  h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.6rem;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    font-size: 1rem;
+  }
+
+  .form-input::placeholder {
+    color: #ddd;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .btn:hover {
+    background: #388e3c;
+  }
+</style>
+
+<div class="glass-card">
+  <h2>✏️ Edit Student</h2>
+  <form method="post">
+    <div class="form-group">
+      {{ form.name.label }}
+      {{ form.name(class_="form-input", placeholder="Enter full name") }}
+    </div>
+    <div class="form-group">
+      {{ form.age.label }}
+      {{ form.age(class_="form-input", placeholder="Enter age") }}
+    </div>
+    <div class="form-group">
+      {{ form.phone.label }}
+      {{ form.phone(class_="form-input", placeholder="Optional phone number") }}
+    </div>
+    <button type="submit" class="btn">Update Student</button>
+  </form>
+</div>
+{% endblock %}

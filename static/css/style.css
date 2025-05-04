@@ -1,0 +1,78 @@
+/* Simple responsive layout */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+  }
+  .navbar {
+    background: #004080;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    color: #fff;
+  }
+  .nav-brand { font-size: 1.25rem; color: #fff; text-decoration: none; }
+  .nav-links {
+    list-style: none;
+    margin-left: auto;
+    display: flex;
+    gap: 1rem;
+  }
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  .form-card, .attendance-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  .form-input {
+    width: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+  .btn {
+    background: #004080;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: #003366;
+  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 0.6rem;
+  }
+  .table th {
+    background: #eaeaea;
+  }
+  .flash-container {
+    margin-bottom: 1rem;
+  }
+  .flash {
+    padding: 0.75rem 1rem;
+    border-radius: 3px;
+    margin-bottom: 0.5rem;
+  }
+  .flash.success { background: #d4edda; color: #155724; }
+  .flash.danger  { background: #f8d7da; color: #721c24; }
+  

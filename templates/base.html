@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}WeGuide Institute{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    /* Navbar Styles */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+    }
+
+    .navbar .logo img {
+      height: 80px;  /* Adjusted height for better visibility */
+      width: auto;   /* Maintains aspect ratio */
+      object-fit: contain;
+    }
+
+    .navbar .brand-name {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+      color: #00e5ff;
+    }
+
+    /* Body and Container */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .flash-container {
+      margin-bottom: 2rem;
+    }
+
+    .flash {
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      background-color: #f44336;
+      color: white;
+    }
+
+    .flash.success {
+      background-color: #4caf50;
+    }
+
+    .flash.info {
+      background-color: #2196f3;
+    }
+
+    .flash.warning {
+      background-color: #ff9800;
+    }
+
+    /* Content Styling */
+    main {
+      padding: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="{{ url_for('login') }}" class="logo">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="WeGuide Logo">
+      <span class="brand-name"></span>
+    </a>
+    {% if current_user.is_authenticated %}
+      <ul class="nav-links">
+        <li><a href="{{ url_for('add_student') }}">Add Student</a></li>
+        <li><a href="{{ url_for('set_attendance_date') }}">New Session</a></li>
+        <li><a href="{{ url_for('attendance_records') }}">View Records</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      </ul>
+    {% endif %}
+  </nav>   
+
+  <!-- Main Container -->
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, msg in messages %}
+            <div class="flash {{ category }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

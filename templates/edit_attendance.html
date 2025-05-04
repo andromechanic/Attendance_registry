@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}Edit Attendance{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background: url('/static/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 2rem;
+    margin: 2rem auto;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    color: #fff;
+  }
+
+  h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  form div {
+    margin-bottom: 1.2rem;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  input[type="datetime-local"],
+  input[type="checkbox"] {
+    padding: 0.6rem;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  input[type="datetime-local"]::placeholder {
+    color: #ddd;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #00bcd4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .btn:hover {
+    background: #0097a7;
+  }
+
+  a {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #fff;
+    text-decoration: underline;
+    text-align: center;
+    width: 100%;
+  }
+</style>
+
+<div class="glass-card">
+  <h2>✏️ Edit Attendance – {{ student.name }}</h2>
+  <form method="post">
+    <div>
+      <label>Check-In Time:</label>
+      <input type="datetime-local" name="time_in"
+             value="{{ att.time_in.strftime('%Y-%m-%dT%H:%M') if att.time_in else '' }}">
+    </div>
+    <div>
+      <label>Check-Out Time:</label>
+      <input type="datetime-local" name="time_out"
+             value="{{ att.time_out.strftime('%Y-%m-%dT%H:%M') if att.time_out else '' }}">
+    </div>
+    <div>
+      <label>
+        <input type="checkbox" name="parent_came" {% if att.parent_came %}checked{% endif %}>
+        Parent Came
+      </label>
+    </div>
+    <button type="submit" class="btn">💾 Save Changes</button>
+    <a href="{{ url_for('student_attendance', attendance_date=att.date.strftime('%Y-%m-%d')) }}">↩️ Cancel</a>
+  </form>
+</div>
+{% endblock %}

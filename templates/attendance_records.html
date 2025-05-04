@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}All Attendance Records{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background: url('static/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    color: #fff;
+  }
+
+  h2 {
+    text-align: center;
+    color: #fff;
+  }
+
+  .glass-card table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    color: #fff;
+  }
+
+  .glass-card th, .glass-card td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-card th {
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+  }
+
+  .glass-card tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .btn {
+    display: inline-block;
+    background: #00bcd4;
+    color: white;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    margin-bottom: 1rem;
+  }
+
+  .btn:hover {
+    background: #0097a7;
+  }
+
+  .center {
+    text-align: center;
+  }
+</style>
+
+<div class="glass-card">
+  <h2>📋 Attendance Records</h2>
+  <div class="center">
+    <a href="{{ url_for('export_attendance') }}" class="btn">⬇️ Download CSV</a>
+  </div>
+  {% if records %}
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Student</th>
+          <th>Check‑In</th>
+          <th>Check‑Out</th>
+          <th>Parent?</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in records %}
+        <tr>
+          <td>{{ r.date.strftime('%Y-%m-%d') }}</td>
+          <td>{{ r.student.name }}</td>
+          <td>{{ r.time_in.strftime('%H:%M:%S') if r.time_in else '—' }}</td>
+          <td>{{ r.time_out.strftime('%H:%M:%S') if r.time_out else '—' }}</td>
+          <td>{{ 'Yes' if r.parent_came else 'No' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="center">No attendance data yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

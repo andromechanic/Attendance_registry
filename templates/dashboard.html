@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard — WeGuide{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background: url('/static/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 2rem;
+    margin: 2rem auto;
+    width: 95%;
+    max-width: 800px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    color: #fff;
+  }
+
+  h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .table thead {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .table th,
+  .table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+  }
+
+  .table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  a {
+    color: #00e6e6;
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: #00bcd4;
+  }
+</style>
+
+<div class="glass-card">
+  <h2>📋 Students List</h2>
+
+  {% if students %}
+    <table class="table">
+      <thead>
+        <tr><th>Name</th><th>Age</th><th>Phone</th></tr>
+      </thead>
+      <tbody>
+        {% for s in students %}
+        <tr>
+          <td>{{ s.name }}</td>
+          <td>{{ s.age }}</td>
+          <td>{{ s.phone or '—' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No students added yet. <a href="{{ url_for('add_student') }}">Add one now</a>.</p>
+  {% endif %}
+</div>
+{% endblock %}

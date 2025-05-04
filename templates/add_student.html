@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% block title %}Add Student — WeGuide{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background: url('/static/bg1.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    color: #fff;
+  }
+
+  h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.6rem;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    font-size: 1rem;
+  }
+
+  .form-input::placeholder {
+    color: #ddd;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #00bcd4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .btn:hover {
+    background: #0097a7;
+  }
+
+  .btn-sm {
+    background-color: #f44336;
+    color: white;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+
+  .btn-sm:hover {
+    background-color: #d32f2f;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+  }
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  th {
+    background-color: rgba(255, 255, 255, 0.1);
+    color:darkblue;
+  }
+
+  td {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .form-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 2rem;
+  }
+
+  .form-box {
+    flex: 1 1 400px;
+    max-width: 500px;
+  }
+
+  .students-container {
+    margin: 2rem auto;
+    width: 90%;
+    max-width: 1000px;
+  }
+</style>
+
+<!-- Add Student & Upload CSV Side by Side -->
+<div class="form-container">
+
+  <!-- Add New Student -->
+  <div class="glass-card form-box">
+    <h2>➕ Add New Student</h2>
+    <form method="post">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.name.label }}
+        {{ form.name(class_="form-input", placeholder="Enter full name") }}
+      </div>
+      <div class="form-group">
+        {{ form.age.label }}
+        {{ form.age(class_="form-input", placeholder="Enter age") }}
+      </div>
+      <div class="form-group">
+        {{ form.phone.label }}
+        {{ form.phone(class_="form-input", placeholder="Optional phone number") }}
+      </div>
+      <button type="submit" class="btn">Add Student</button>
+    </form>
+  </div>
+
+  <!-- CSV Upload -->
+  <div class="glass-card form-box">
+    <h2>📥 Upload CSV</h2>
+    <form method="post" action="{{ url_for('bulk_upload_students') }}" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="csv_file">CSV File</label>
+        <input type="file" name="csv_file" id="csv_file" accept=".csv" class="form-input" required>
+      </div>
+      <button type="submit" class="btn">Upload</button>
+    </form>
+  </div>
+
+</div>
+
+<!-- All Students List -->
+<div class="glass-card students-container">
+  <h2>👥 All Students</h2>
+  {% if students %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+          <tr>
+            <td>{{ student.name }}</td>
+            <td>{{ student.age }}</td>
+            <td>{{ student.phone or '—' }}</td>
+            <td>
+              <a href="{{ url_for('edit_student', student_id=student.id) }}" class="btn-sm">✏️ Edit</a>
+              <form method="POST" action="{{ url_for('delete_student', student_id=student.id) }}" style="display:inline;">
+                <button type="submit" class="btn-sm">🗑️ Delete</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No students added yet.</p>
+  {% endif %}
+</div>
+{% endblock %}
